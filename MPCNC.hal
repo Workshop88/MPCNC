@@ -311,20 +311,20 @@ setp bb_gpio.p8.out-16.invert 1
 
 # Servo signals, output only, driven by an 'ACT125
 
-newsig servo.1 bit
-newsig servo.2 bit
-newsig servo.3 bit
-newsig servo.4 bit
+#newsig servo.1 bit
+#newsig servo.2 bit
+#newsig servo.3 bit
+#newsig servo.4 bit
 
-sets servo.1 0
-sets servo.2 0
-sets servo.3 0
-sets servo.4 0
+#sets servo.1 0
+#sets servo.2 0
+#sets servo.3 0
+#sets servo.4 0
 
-net servo.1 bb_gpio.p8.out-25
-net servo.2 bb_gpio.p8.out-24
-net servo.3 bb_gpio.p8.out-23
-net servo.4 bb_gpio.p8.out-22
+#net servo.1 bb_gpio.p8.out-25
+#net servo.2 bb_gpio.p8.out-24
+#net servo.3 bb_gpio.p8.out-23
+#net servo.4 bb_gpio.p8.out-22
 
 
 # ##################################################
