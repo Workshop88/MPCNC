@@ -16,7 +16,7 @@ loadusr -w ./setup.sh
 
 # kinematics  
 # see http://linuxcnc.org/docs/html/man/man9/kins.9.html
-loadrt gantrykins coordinates=XYZX
+loadrt gantrykins coordinates=XYZXY
 
 # motion controller, get name and thread periods from ini file  
 # trajectory planner
