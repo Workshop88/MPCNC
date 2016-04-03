@@ -183,9 +183,9 @@ setp hpg.stepgen.02.steppin        819
 setp hpg.stepgen.02.dirpin         818
 
 
-# ################
-# A [3] Axis (Extruder)
-# ################
+# ##############################
+# A [3] Axis Extra X Axis Gantry
+# ##############################
 
 # axis enable chain
 newsig emcmot.03.enable bit
