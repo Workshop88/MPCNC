@@ -1,7 +1,7 @@
 # #######################################
 #
-# HAL file for BeagleBone + BeBoPr cape with 4 steppers
-#
+# HAL file for BeagleBone + CRAMPS 5 steppers
+# 
 # Derived from example hm2-stepper config
 #
 # ########################################
