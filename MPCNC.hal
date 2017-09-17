@@ -3,8 +3,10 @@
 # HAL file for BeagleBone + CRAMPS 5 steppers
 # 
 # Derived from example hm2-stepper config
-#
+# Cramps schematic can be found here http://reprap.org/mediawiki/images/5/5a/CRAMPS.v2.1.sch.pdf
 # ########################################
+
+
 
 # Launch the setup script to make sure hardware setup looks good
 loadusr -w ./setup.sh
@@ -465,16 +467,19 @@ net tool-prep-loop iocontrol.0.tool-prepare => iocontrol.0.tool-prepared
 net tool-change-loop iocontrol.0.tool-change => iocontrol.0.tool-changed
 
 # Axis enable signal (active low)
-net emcmot.00.enable => bb_gpio.p9.out-14
+#net emcmot.00.enable => bb_gpio.p9.out-14
+net xenable => bb_gpio.p9.out-14
 setp bb_gpio.p9.out-14.invert 1
 
 # Machine power
 # Use halui.machine.is-on instead?
-net emcmot.00.enable => bb_gpio.p9.out-23
+#net emcmot.00.enable => bb_gpio.p9.out-23
+net xenable => bb_gpio.p9.out-23
 
 # Tie machine power signal to the CRAMPS LED
 # Feel free to tie any other signal you like to the LED
-net emcmot.00.enable => bb_gpio.p9.out-25
+#net emcmot.00.enable => bb_gpio.p9.out-25
+net xenable => bb_gpio.p9.out-25
 
 # ################
 # Limit Switches
