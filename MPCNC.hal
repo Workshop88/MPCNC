@@ -14,48 +14,68 @@ loadusr -w ./setup.sh
 # Core EMC/HAL Loads
 # ###################################
 
+##################################################
 # kinematics  
 # http://www.machinekit.io/docs/man/man9/kins/
+##################################################
 loadrt trivkins
 
+##########################################################################
 # motion controller, get name and thread periods from ini file  
 # trajectory planner(machinekit specific)
 #http://blog.machinekit.io/2015/02/loadable-trajectory-modules.html
+#########################################################################
 loadrt tp
 
+###########################################################################################
 # loads motmod see http://linuxcnc.org/docs/html/man/man9/motion.9.html
-# Basically motmod takes in a list of waypoints and generates a nice blended and constraint-limited stream of joint positions to be fed to the motor drives.
-# this module crea
+# Basically motmod takes in a list of waypoints and generates a nice blended and constraint-limited stream 
+# of joint positions to be fed to the motor drives.
+###########################################################
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[TRAJ]AXES tp=tp kins=trivkins
 
-
+##################################
 # load low-level drivers
-
+##################################
 #see ??
 loadrt hal_bb_gpio output_pins=816,826,914,923,925 input_pins=807,808,809,810,817,911,913
 
-# loads hal_pru_generic see ??
+########################################################################################
+# loads hal_pru_generic see http://www.machinekit.io/docs/man/man9/hal_pru_generic/
+########################################################################################
 loadrt [PRUCONF](DRIVER) prucode=$(HAL_RTMOD_DIR)/[PRUCONF](PRUBIN) [PRUCONF](CONFIG) halname=hpg
 
+###############################################################
 # See http://linuxcnc.org/docs/html/man/man9/pid.9.html
+# this is used with 3d printers not using this for a mill
+###############################################################
 #loadrt pid count=2
 
+##########################################################################
+#for gantry see see http://www.machinekit.io/docs/man/man9/gantry/
+#newinst see?
+##########################################################################
 newinst gantry gantryX.0 pincount=2
 newinst gantry gantryY.0 pincount=2
 
 
+################################################################
 #see http://linuxcnc.org/docs/html/man/man9/limit1.9.html
+################################################################
 loadrt limit1 count=2
  
+#################################################################################################
 # Python user-mode HAL module to read ADC value and generate a thermostat output for PWM
 # c = analog input channel and thermistor table
+#################################################################################################
 #loadusr -Wn Therm hal_temp_bbb -n Therm -c 04:epcos_B57560G1104,05:epcos_B57560G1104 -b CRAMPS
 
 # ################################################
 # THREADS
+# see http://www.machinekit.io/docs/hal/basic_hal/#addf-a-id-sub-addf-a
 # ################################################
 
-addf hpg.capture-position   servo-thread
+addf hpg.capture-position                 servo-thread
 addf bb_gpio.read                         servo-thread
 addf motion-command-handler               servo-thread
 addf gantryX.0.read                        servo-thread
@@ -70,7 +90,7 @@ addf gantryY.0.write                       servo-thread
 
 addf limit1.0                             servo-thread
 addf limit1.1                             servo-thread
-addf hpg.update             servo-thread
+addf hpg.update                           servo-thread
 addf bb_gpio.write                        servo-thread
 
 
@@ -125,6 +145,7 @@ setp hpg.stepgen.01.steppin        916
 setp hpg.stepgen.01.dirpin         912
 
 # y-axis gantry
+# some info on net http://www.machinekit.io/docs/hal/basic_hal/#net-a-id-sub-net-a
 net y1pos-cmd gantryY.0.joint.00.pos-cmd => hpg.stepgen.02.position-cmd
 net y1pos-fb  gantryY.0.joint.00.pos-fb  <= hpg.stepgen.02.position-fb
 net y2pos-cmd gantryY.0.joint.01.pos-cmd => hpg.stepgen.03.position-cmd
