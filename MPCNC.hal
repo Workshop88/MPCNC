@@ -205,8 +205,54 @@ setp hpg.stepgen.04.steppin        819
 # P8.29 PRU1.out9
 setp hpg.stepgen.04.dirpin         818
 
+########################################################
+# GETTING THE GANTRY HOME SWITCHES SETUP
+########################################################
+# TODO this can be deleted just a refer to the cramps pins
+#net limit-x-min <= bb_gpio.p8.in-08
+#net limit-x-max <= bb_gpio.p8.in-07
+#net limit-y-min <= bb_gpio.p8.in-10
+#net limit-y-max <= bb_gpio.p8.in-09
+#net limit-z-min <= bb_gpio.p9.in-13
+#net limit-z-max <= bb_gpio.p9.in-11
 
 
+
+####################################
+### X- AXIS GANTRY  ################
+####################################
+# debounce the X-axis switches and connect them to signals
+net switches-x1 	<= bb_gpio.p8.in-08
+net switches-x2 	<= bb_gpio.p8.in-07
+
+# join the home switch signals so that both switches have to be closed to trigger a home position
+net switches-x1		=> gantryX.0.joint.00.home
+net switches-x2		=> gantryX.0.joint.01.home
+net home-x 		<= gantryX.0.home
+net home-x 		=> axis.0.home-sw-in
+net limit-x		<= gantryX.0.limit
+net limit-x		=> axis.0.neg-lim-sw-in
+
+####################################
+### Y- AXIS GANTRY  ################
+####################################
+# debounce the y-axis switches and connect them to signals
+net switches-y1 	<= bb_gpio.p8.in-10
+net switches-y2 	<= bb_gpio.p8.in-09
+
+# join the home switch signals so that both switches have to be closed to trigger a home position
+net switches-y1		=> gantryY.0.joint.00.home
+net switches-y2		=> gantryY.0.joint.01.home
+net home-y 		<= gantryY.0.home
+net home-y 		=> axis.1.home-sw-in
+net limit-y		<= gantryY.0.limit
+net limit-y		=> axis.1.neg-lim-sw-in
+
+
+# This is a todo. I don't have have Z limit switches built yet for my MPCNC
+#net switches-z 		<= bb_gpio.p8.in-18
+#net switches-z 		=> axis.2.home-sw-in
+#net switches-z		=> axis.2.pos-lim-sw-in
 
 
 
@@ -433,27 +479,27 @@ net emcmot.00.enable => bb_gpio.p9.out-25
 # ################
 # Limit Switches
 # ################
-newsig limit-x-min bit
-newsig limit-x-max bit
-newsig limit-y-min bit
-newsig limit-y-max bit
-newsig limit-z-min bit
-newsig limit-z-max bit
+#newsig limit-x-min bit
+#newsig limit-x-max bit
+#newsig limit-y-min bit
+#newsig limit-y-max bit
+#newsig limit-z-min bit
+#newsig limit-z-max bit
 
-net limit-x-min <= bb_gpio.p8.in-08
-net limit-x-max <= bb_gpio.p8.in-07
-net limit-y-min <= bb_gpio.p8.in-10
-net limit-y-max <= bb_gpio.p8.in-09
-net limit-z-min <= bb_gpio.p9.in-13
-net limit-z-max <= bb_gpio.p9.in-11
+#net limit-x-min <= bb_gpio.p8.in-08
+#net limit-x-max <= bb_gpio.p8.in-07
+#net limit-y-min <= bb_gpio.p8.in-10
+#net limit-y-max <= bb_gpio.p8.in-09
+#net limit-z-min <= bb_gpio.p9.in-13
+#net limit-z-max <= bb_gpio.p9.in-11
 
 # Adjust as needed for your switch polarity
-setp bb_gpio.p8.in-08.invert 1
-setp bb_gpio.p8.in-07.invert 1
-setp bb_gpio.p8.in-10.invert 1
-setp bb_gpio.p8.in-09.invert 1
-setp bb_gpio.p9.in-11.invert 1
-setp bb_gpio.p9.in-13.invert 1
+#setp bb_gpio.p8.in-08.invert 1
+#setp bb_gpio.p8.in-07.invert 1
+#setp bb_gpio.p8.in-10.invert 1
+#setp bb_gpio.p8.in-09.invert 1
+#setp bb_gpio.p9.in-11.invert 1
+#setp bb_gpio.p9.in-13.invert 1
 
 # Uncomment if you actually have limit switches setup
 # You probably want to setup homing in the INI file, as well
