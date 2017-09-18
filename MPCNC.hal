@@ -250,11 +250,15 @@ net home-y 		=> axis.1.home-sw-in
 net limit-y		<= gantryY.0.limit
 net limit-y		=> axis.1.neg-lim-sw-in
 
+####################################
+### Z AXIS  ################
+####################################
 
-# This is a todo. I don't have have Z limit switches built yet for my MPCNC
-#net switches-z 		<= bb_gpio.p8.in-18
-#net switches-z 		=> axis.2.home-sw-in
-#net switches-z		=> axis.2.pos-lim-sw-in
+net limit-z-min <= bb_gpio.p9.in-13
+net both-home-z-max <= bb_gpio.p9.in-11
+net both-home-z-max		=> axis.2.pos-lim-sw-in
+net limit-z-min => axis.2.neg-lim-sw-in
+net both-home-z-max => axis.2.home-sw-in
 
 
 
